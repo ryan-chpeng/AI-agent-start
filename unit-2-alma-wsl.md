@@ -233,12 +233,12 @@ wsl --import $Name "$Root\system" "$Root\backup\$Name-baseline.tar" --version 2
 
 | 問題 | 回答 |
 |:--|:--|
-| 🔧 `--name`、`--location` 無法辨識？ | 執行 `wsl --update` 後重試。 |
+| `--name`、`--location` 無法辨識？ | 執行 `wsl --update` 後重試。 |
 | ⏳ 安裝卡在 0.0%？ | 加上 `--web-download` 重試。 |
-| 📄 `wsl --install` 只顯示說明文字？ | 代表 WSL 已安裝；用 `wsl --list --online` 確認名稱，再用 `wsl --install AlmaLinux-10 ...`。 |
-| 💻 提示需要啟用虛擬化？ | 重開機進 BIOS/UEFI 啟用虛擬化技術（Intel VT-x 或 AMD-V），細節見 Microsoft 疑難排解文件。 |
-| 📂 想改安裝位置？ | 先用第 7 步備份，`--unregister` 後用第 8 步的 `--import` 指到新資料夾。 |
-| 🗑️ 想完全移除？ | 備份後 `wsl --unregister Alma-Training`，再自行刪除 `$Root` 資料夾。 |
+| `wsl --install` 只顯示說明文字？ | 代表 WSL 已安裝；用 `wsl --list --online` 確認名稱，再用 `wsl --install AlmaLinux-10 ...`。 |
+| 提示需要啟用虛擬化？ | 重開機進 BIOS/UEFI 啟用虛擬化技術（Intel VT-x 或 AMD-V），細節見 Microsoft 疑難排解文件。 |
+| 想改安裝位置？ | 先用第 7 步備份，`--unregister` 後用第 8 步的 `--import` 指到新資料夾。 |
+| 想完全移除？ | 備份後 `wsl --unregister Alma-Training`，再自行刪除 `$Root` 資料夾。 |
 
 > [!WARNING]
 > 請勿隨意使用 `wsl --shutdown`：它會立即關閉所有 WSL 發行版與整個 WSL2 虛擬機，同一台電腦上其他 WSL 環境的未存檔工作都會中斷。要停止單一環境只用 `wsl --terminate <名稱>`。

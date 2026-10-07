@@ -275,15 +275,15 @@ OpenCode 常用指令（來自 `opencode --help`）：
 
 | 問題 | 回答 |
 |:--|:--|
-| 🔍 指令找不到（`claude`、`codex`、`opencode`、`gemini`）？ | 關掉終端機開新的；仍找不到是 PATH 還沒包含安裝目錄，用 `where.exe 指令名` 確認。 |
-| 🔀 `The token '&&' is not a valid statement separator`？ | 你在 PowerShell 貼了 CMD 的指令，改用方法 A。 |
-| 🔀 `'irm' is not recognized as an internal or external command`？ | 你在 CMD 貼了 PowerShell 的指令，改開 PowerShell。 |
-| 🌐 安裝時出現 `403` 或連線錯誤？ | 檢查網路、VPN 或公司代理是否擋住對應網域（`claude.ai`、`downloads.claude.ai`、`chatgpt.com`、`releases.openai.com`、`registry.npmjs.org`）。 |
-| 🌍 提示所在地區不支援？ | 各工具對國家與地區有各自限制，見官方文件（Claude Code 見 Anthropic supported countries）。 |
-| 🔐 直接執行 `.ps1` 被擋（執行原則）？ | 用本文的 `Get-Content ... \| Invoke-Expression`，或官方指令的行程內 `-ExecutionPolicy ByPass`；不要全域放寬。 |
-| 📦 `npm` 找不到？ | 先安裝 Node.js（第 1 節），並重開 PowerShell。 |
-| 🔑 `npm` 權限錯誤？ | 不要用管理員權限硬裝；改用腳本、WinGet 或 Scoop。 |
-| 🗑️ 想移除 Claude Code？ | WinGet 安裝用 `winget uninstall Anthropic.ClaudeCode`；原生安裝請照官方 Uninstall 章節，並先確認要刪的路徑。 |
+| 指令找不到（`claude`、`codex`、`opencode`、`gemini`）？ | 關掉終端機開新的；仍找不到是 PATH 還沒包含安裝目錄，用 `where.exe 指令名` 確認。 |
+| `The token '&&' is not a valid statement separator`？ | 你在 PowerShell 貼了 CMD 的指令，改用方法 A。 |
+| `'irm' is not recognized as an internal or external command`？ | 你在 CMD 貼了 PowerShell 的指令，改開 PowerShell。 |
+| 安裝時出現 `403` 或連線錯誤？ | 檢查網路、VPN 或公司代理是否擋住對應網域（`claude.ai`、`downloads.claude.ai`、`chatgpt.com`、`releases.openai.com`、`registry.npmjs.org`）。 |
+| 提示所在地區不支援？ | 各工具對國家與地區有各自限制，見官方文件（Claude Code 見 Anthropic supported countries）。 |
+| 直接執行 `.ps1` 被擋（執行原則）？ | 用本文的 `Get-Content ... \| Invoke-Expression`，或官方指令的行程內 `-ExecutionPolicy ByPass`；不要全域放寬。 |
+| `npm` 找不到？ | 先安裝 Node.js（第 1 節），並重開 PowerShell。 |
+| `npm` 權限錯誤？ | 不要用管理員權限硬裝；改用腳本、WinGet 或 Scoop。 |
+| 想移除 Claude Code？ | WinGet 安裝用 `winget uninstall Anthropic.ClaudeCode`；原生安裝請照官方 Uninstall 章節，並先確認要刪的路徑。 |
 
 ---
 

@@ -39,8 +39,8 @@
 
   // GitHub-style alerts: "> [!IMPORTANT]" -> styled callout box
   var ALERTS = {
-    NOTE: ['ℹ️', '說明'], TIP: ['💡', '提示'], IMPORTANT: ['❗', '重要'],
-    WARNING: ['⚠️', '警告'], CAUTION: ['🛑', '注意']
+    NOTE: ['ℹ️', 'Note'], TIP: ['💡', 'Tip'], IMPORTANT: ['❗', 'Important'],
+    WARNING: ['⚠️', 'Warning'], CAUTION: ['🛑', 'Caution']
   };
   function alerts() {
     content.querySelectorAll('blockquote').forEach(function (bq) {
@@ -85,7 +85,7 @@
       h2s.forEach(function (h, i) {
         h.id = 'sec-' + (i + 1);
         var li = document.createElement('li'); var a = document.createElement('a');
-        a.href = '#' + h.id; a.textContent = h.textContent;
+        a.href = '#' + h.id; a.textContent = h.textContent.replace(/^[\p{Extended_Pictographic}\uFE0F\u200D\s]+/u, '');
         li.appendChild(a); ol.appendChild(li);
       });
       nav.appendChild(ol);
