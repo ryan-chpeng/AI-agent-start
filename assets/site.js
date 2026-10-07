@@ -70,6 +70,22 @@
       h2s[0].parentNode.insertBefore(nav, h2s[0]);
     }
 
+    // indent sub-sections: each h3 (and then each h4 inside it) with its body goes into a nested block
+    function nest(container, tag, stops, cls) {
+      Array.prototype.slice.call(container.children).forEach(function (h) {
+        if (h.tagName !== tag) return;
+        var box = document.createElement('div'); box.className = cls;
+        h.parentNode.insertBefore(box, h);
+        var n = h;
+        while (n && !(n !== h && stops.indexOf(n.tagName) !== -1)) {
+          var next = n.nextElementSibling; box.appendChild(n); n = next;
+        }
+      });
+    }
+    nest(content, 'H3', ['H1', 'H2', 'H3'], 'sub sub3');
+    content.querySelectorAll('.sub3').forEach(function (box) { nest(box, 'H4', ['H4'], 'sub sub4'); });
+    nest(content, 'H4', ['H1', 'H2', 'H3', 'H4'], 'sub sub4');
+
     // previous / next unit links under the content
     var prev = pagerLink('data-prev', 'prev', '← ');
     var next = pagerLink('data-next', 'next', '');
