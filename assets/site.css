@@ -2,18 +2,21 @@
   --bg: #ffffff; --fg: #1f2328; --muted: #59636e; --line: #d1d9e0;
   --accent: #0b5cad; --code-bg: #f6f8fa; --btn-bg: #ffffff; --quote: #eef4fb;
   --warn-line: #bf8700;
+  --a-note: #0969da; --a-tip: #1a7f37; --a-important: #8250df; --a-warning: #9a6700; --a-caution: #cf222e;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --line: #30363d;
     --accent: #58a6ff; --code-bg: #161b22; --btn-bg: #21262d; --quote: #121d2f;
     --warn-line: #d29922;
+    --a-note: #58a6ff; --a-tip: #3fb950; --a-important: #ab7df8; --a-warning: #d29922; --a-caution: #f85149;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0d1117; --fg: #e6edf3; --muted: #9198a1; --line: #30363d;
   --accent: #58a6ff; --code-bg: #161b22; --btn-bg: #21262d; --quote: #121d2f;
   --warn-line: #d29922;
+  --a-note: #58a6ff; --a-tip: #3fb950; --a-important: #ab7df8; --a-warning: #d29922; --a-caution: #f85149;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -88,3 +91,16 @@ nav.pager a {
 nav.pager .next { margin-left: auto; text-align: right; }
 footer { margin-top: 2em; padding-top: 1em; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
 #status { color: var(--muted); }
+
+blockquote.alert { background: var(--code-bg); border-left-width: 4px; }
+blockquote.alert .alert-title { font-weight: 700; margin-bottom: 2px; }
+blockquote.alert-note { border-left-color: var(--a-note); } blockquote.alert-note .alert-title { color: var(--a-note); }
+blockquote.alert-tip { border-left-color: var(--a-tip); } blockquote.alert-tip .alert-title { color: var(--a-tip); }
+blockquote.alert-important { border-left-color: var(--a-important); } blockquote.alert-important .alert-title { color: var(--a-important); }
+blockquote.alert-warning { border-left-color: var(--a-warning); } blockquote.alert-warning .alert-title { color: var(--a-warning); }
+blockquote.alert-caution { border-left-color: var(--a-caution); } blockquote.alert-caution .alert-title { color: var(--a-caution); }
+details { margin: 1em 0; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--code-bg); }
+details > summary { cursor: pointer; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 2em 0; }
+
+hr + h2 { border-top: 0; margin-top: 0.4em; padding-top: 0; }

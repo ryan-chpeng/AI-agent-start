@@ -37,7 +37,29 @@
     return a;
   }
 
+  // GitHub-style alerts: "> [!IMPORTANT]" -> styled callout box
+  var ALERTS = {
+    NOTE: ['ℹ️', '說明'], TIP: ['💡', '提示'], IMPORTANT: ['❗', '重要'],
+    WARNING: ['⚠️', '警告'], CAUTION: ['🛑', '注意']
+  };
+  function alerts() {
+    content.querySelectorAll('blockquote').forEach(function (bq) {
+      var p = bq.firstElementChild;
+      if (!p || p.tagName !== 'P') return;
+      var m = p.innerHTML.match(/^\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(?:<br\s*\/?>)?\s*/i);
+      if (!m) return;
+      var type = m[1].toUpperCase();
+      p.innerHTML = p.innerHTML.slice(m[0].length).replace(/\n/g, '<br>');
+      if (!p.innerHTML.trim()) bq.removeChild(p);
+      bq.className = 'alert alert-' + type.toLowerCase();
+      var title = document.createElement('div'); title.className = 'alert-title';
+      title.textContent = ALERTS[type][0] + ' ' + ALERTS[type][1];
+      bq.insertBefore(title, bq.firstChild);
+    });
+  }
+
   function decorate() {
+    alerts();
     // copy buttons on every code block
     content.querySelectorAll('pre').forEach(function (pre) {
       var wrap = document.createElement('div'); wrap.className = 'codewrap';
