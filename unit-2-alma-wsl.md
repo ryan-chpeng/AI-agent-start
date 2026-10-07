@@ -1,8 +1,8 @@
 # 單元 2：安裝 AlmaLinux 10（Windows + WSL2）
 
-在自己的 Windows 電腦上建立**獨立、可重置**的 AlmaLinux 10 練習環境 `Alma-OpenCode`。全程在 PowerShell 操作，約 15 到 20 分鐘（下載約 1 分鐘，視網速）。
+在自己的 Windows 電腦上建立**獨立、可重置**的 AlmaLinux 10 練習環境 `Alma-Training`。全程在 PowerShell 操作，約 15 到 20 分鐘（下載約 1 分鐘，視網速）。
 
-**前提**：已完成[單元 1](https://ryan-chpeng.github.io/alma-wsl-training/)，Agent 已能在 Windows 上使用。本單元的環境用於需要與 Windows 隔離、可隨時還原的練習；最後一節說明如何把 Agent 也裝進去。
+**前提**：Windows 10／11 電腦。單元 1 的 AI CLI 是裝在 Windows 上；本單元是另外建立一個與 Windows 隔離、可隨時還原的 Linux 練習環境，兩個單元互相獨立。
 
 ## 流程總覽
 
@@ -64,7 +64,7 @@ wsl --version
 **設定變數並建立資料夾：**
 
 ```powershell
-$Name = "Alma-OpenCode"
+$Name = "Alma-Training"
 $Root = "D:\WSL_Training"        # 改成你要放的磁碟與資料夾
 New-Item -ItemType Directory -Force "$Root\system","$Root\backup" | Out-Null
 ```
@@ -77,7 +77,7 @@ wsl --install AlmaLinux-10 --name $Name --location "$Root\system" --no-launch
 
 - 選 `AlmaLinux-10`（穩定版），不要選 `AlmaLinux-Kitten-10`（開發預覽版）。
 - `--no-launch`：安裝後先不進入，下一步自己建立使用者。
-- 成功訊息：「已成功安裝發佈。可以透過 『wsl.exe -d Alma-OpenCode' 啟動」。
+- 成功訊息：「已成功安裝發佈。可以透過 『wsl.exe -d Alma-Training' 啟動」。
 
 卡在 0.0% 時，改加 `--web-download` 重試：
 
@@ -92,7 +92,7 @@ wsl -l -v
 wsl -d $Name -u root --exec /usr/bin/cat /etc/almalinux-release
 ```
 
-預期：`Alma-OpenCode` 的 VERSION 是 2，系統顯示 `AlmaLinux release 10.x`（小版本號會隨映像更新而不同）。
+預期：`Alma-Training` 的 VERSION 是 2，系統顯示 `AlmaLinux release 10.x`（小版本號會隨映像更新而不同）。
 
 ## 5. 建立使用者
 
@@ -114,7 +114,7 @@ wsl -d $Name -u root --exec /usr/bin/passwd $User
 
 依提示輸入兩次密碼（輸入時畫面不會顯示字元，這是正常的）。
 
-> 不設密碼的話：帳號是鎖定狀態，在本機用 `wsl -d Alma-OpenCode` 仍可進入，但無法使用 `sudo`；需要管理員權限時改用 `wsl -d Alma-OpenCode -u root`。
+> 不設密碼的話：帳號是鎖定狀態，在本機用 `wsl -d Alma-Training` 仍可進入，但無法使用 `sudo`；需要管理員權限時改用 `wsl -d Alma-Training -u root`。
 
 ## 6. 設定預設使用者與加固（建議做）
 
@@ -186,10 +186,10 @@ Get-Item "$Root\backup\$Name-baseline.tar" | Select-Object Name,@{n='MB';e={[mat
 
 | 目的 | 指令 |
 | --- | --- |
-| 進入環境 | `wsl -d Alma-OpenCode` |
+| 進入環境 | `wsl -d Alma-Training` |
 | 查看狀態 | `wsl -l -v` |
-| 停止這個環境 | `wsl --terminate Alma-OpenCode` |
-| 在 Windows 檔案總管看 Linux 檔案 | 網址列輸入 `\\wsl.localhost\Alma-OpenCode\home\<你的使用者名稱>\` |
+| 停止這個環境 | `wsl --terminate Alma-Training` |
+| 在 Windows 檔案總管看 Linux 檔案 | 網址列輸入 `\\wsl.localhost\Alma-Training\home\<你的使用者名稱>\` |
 
 **傳檔**：由 Windows 檔案總管把檔案拖進 `\\wsl.localhost\...` 的資料夾，或從裡面拖出來。關閉 automount 後，Linux 不會主動讀寫 Windows，所以傳檔一律從 Windows 端操作。
 
@@ -201,7 +201,7 @@ sed -i 's/\r$//' 檔名
 
 **弄壞了怎麼還原**
 
-> 警告：`--unregister` 會永久刪除目前的 Alma-OpenCode 與裡面所有資料。先把需要的檔案經 `\\wsl.localhost\...` 複製出來。
+> 警告：`--unregister` 會永久刪除目前的 Alma-Training 與裡面所有資料。先把需要的檔案經 `\\wsl.localhost\...` 複製出來。
 
 ```powershell
 wsl --terminate $Name
@@ -210,136 +210,6 @@ wsl --import $Name "$Root\system" "$Root\backup\$Name-baseline.tar" --version 2
 ```
 
 還原後的預設使用者以 `/etc/wsl.conf` 的 `[user] default` 為準，基準檔已包含第 5、6 步的設定。
-
-## 9. 在 Alma 內安裝 Agent（可選）
-
-單元 1 把 Agent 裝在 Windows。要讓 Agent 在這個隔離環境內工作，就在 `Alma-OpenCode` 內再裝一次。Linux 版的 Agent 與 Windows 版是各自獨立的安裝，設定與登入也要各做一次。
-
-隔離的效果來自第 6 步：Agent 在 Linux 內只看得到 Linux 的檔案，讀不到 `C:`、`D:`，也不能呼叫 Windows 程式；弄壞了用第 8 步還原。
-
-前提：環境能連外網；使用者不是 root（`whoami` 確認）。進入環境：
-
-```powershell
-wsl -d Alma-OpenCode
-```
-
-### 9.1 檢查工具與網路
-
-```bash
-whoami
-uname -m
-curl --version | head -1
-tar --version | head -1
-curl -s -o /dev/null -w '%{http_code}\n' -I https://api.github.com/repos/anomalyco/opencode/releases/latest
-```
-
-預期：`whoami` 是你的使用者（不是 root）、`uname -m` 是 `x86_64`、`curl` 與 `tar` 都有版本資訊、最後一行是 `200`。
-
-### 9.2 安裝 Claude Code（Linux）
-
-官方 Linux／WSL 的一行式安裝是 `curl -fsSL https://claude.ai/install.sh | bash`。同樣先下載、看過再執行：
-
-```bash
-cd ~
-curl -fsSL https://claude.ai/install.sh -o claude-install.sh
-wc -l claude-install.sh
-bash -n claude-install.sh && echo "語法檢查通過"
-less claude-install.sh
-```
-
-審閱時請確認下載網址是 `downloads.claude.ai`。確認後執行並驗證：
-
-```bash
-bash claude-install.sh
-```
-
-關掉終端機重開（或 `source ~/.bashrc`），再：
-
-```bash
-claude --version
-claude doctor
-```
-
-啟動與登入跟單元 1 相同，在專案資料夾內執行 `claude`：
-
-```bash
-mkdir -p ~/projects/demo
-cd ~/projects/demo
-claude
-```
-
-在 WSL 內執行 `claude` 會開瀏覽器登入。若環境內開不了瀏覽器，請照畫面提示把網址複製到 Windows 的瀏覽器完成登入（我們未實測）。
-
-### 9.3 安裝 OpenCode（Linux）
-
-OpenCode 官方建議 Windows 使用者用 WSL，這是官方的建議安裝位置。官方文件的一行式安裝是 `curl -fsSL https://opencode.ai/install | bash`，同樣改成先審閱：
-
-```bash
-cd ~
-curl -fsSL https://opencode.ai/install -o opencode-install.sh
-wc -l opencode-install.sh
-bash -n opencode-install.sh && echo "語法檢查通過"
-less opencode-install.sh
-```
-
-`less` 裡按空白鍵翻頁、按 `q` 離開。`bash -n` 只檢查語法，不會執行腳本。
-
-我們審閱過的版本做的事只有三件：
-
-- 偵測作業系統與 CPU 架構，選對應的下載檔。
-- 從 `github.com/anomalyco/opencode` 的 release 下載壓縮檔，解壓到 `~/.opencode/bin`。
-- 在 `~/.bashrc` 加一行 `export PATH=...`。
-
-> 這個腳本不會比對下載檔的校驗碼。審閱時請確認下載網址是 `github.com/anomalyco/opencode`。
->
-> 想核對你拿到的是不是同一份：2026-10-05 下載到的腳本，`sha256sum opencode-install.sh` 結果是 `fc3c1b2123f49b6df545a7622e5127d21cd794b15134fc3b66e1ca49f7fb297e`。若你的結果不同，代表官方更新過腳本，請重新審閱，這不一定是壞事。
-
-執行安裝並驗證：
-
-```bash
-bash opencode-install.sh
-source ~/.bashrc
-command -v opencode
-opencode --version
-```
-
-預期 `command -v` 顯示 `/home/<你的使用者名稱>/.opencode/bin/opencode`，`--version` 顯示版本號（我們測試時是 `1.18.34`，你看到的版本可能更新）。安裝不需要 root，也不會動到 Windows。
-
-啟動與連線（`/connect` 設定供應商，輸入你自己的 API key）：
-
-```bash
-mkdir -p ~/projects/demo
-cd ~/projects/demo
-opencode
-```
-
-### 9.4 Alma 內使用 Agent 的注意事項
-
-- **它只看得到 Linux 內的檔案。** 要處理 Windows 的檔案，用 `\\wsl.localhost\Alma-OpenCode\home\<你的使用者名稱>\` 把檔案拖進去，結果也從那裡拖出來。
-- **內容仍會送給模型供應商。** 隔離只限制本機檔案，不限制 Agent 把你給它的內容送出去。教學時不要放機密資料。
-- **登入資訊會存在環境內。** 在 Alma 內登入後，認證資料會存在這個環境的磁碟上；用第 7 步匯出的備份檔會一併帶走。
-- **`opencode serve` 與 `opencode web` 會啟動伺服器。** 它們預設綁定到哪個位址，本文沒有查證，沒有需要時不要啟用。
-
-### 9.5 存一份含 Agent 的基準（可選）
-
-第 7 步存的基準是安裝 Agent 之前的狀態，還原後 Agent 會消失，需要重做第 9 步。想省下重裝時間，可以另存一份：
-
-```powershell
-wsl --terminate $Name
-wsl --export $Name "$Root\backup\$Name-agent-baseline.tar"
-```
-
-這裡的 `$Name`、`$Root` 是第 4 步設定的變數。**請在登入 Claude Code、連線供應商或輸入 API key 之前存**，否則你的認證資料會被一起存進備份檔。
-
-### 9.6 常見問題（Agent）
-
-| 狀況 | 處理 |
-| --- | --- |
-| `curl: (6) Could not resolve host` 或逾時 | 網路問題：檢查 Windows 是否能上網，以及 VPN 或公司代理是否擋住 GitHub、`claude.ai`、`downloads.claude.ai` |
-| `claude` 或 `opencode: command not found` | 執行 `source ~/.bashrc`，或關掉終端機重開；確認安裝目錄有執行檔（OpenCode 是 `ls ~/.opencode/bin`） |
-| OpenCode 腳本顯示 `Unsupported OS/Arch` | 腳本只支援特定組合（Linux 的 x64 與 arm64 等），請確認 `uname -m` |
-| 你的 CPU 沒有 AVX2 | OpenCode 腳本會自動改選 baseline 版本，不需要處理 |
-| 畫面顯示亂碼或排版錯位 | 官方文件要求現代終端機，請改用 Windows Terminal 等支援完整色彩與 Unicode 的終端機（我們未實測） |
 
 ## 常見問題
 
@@ -350,7 +220,7 @@ wsl --export $Name "$Root\backup\$Name-agent-baseline.tar"
 | `wsl --install` 只顯示說明文字 | 代表 WSL 已安裝；用 `wsl --list --online` 確認名稱，再用 `wsl --install AlmaLinux-10 ...` |
 | 提示需要啟用虛擬化 | 重開機進 BIOS/UEFI 啟用虛擬化技術（Intel VT-x 或 AMD-V），細節見 Microsoft 疑難排解文件 |
 | 想改安裝位置 | 先用第 7 步備份，`--unregister` 後用第 8 步的 `--import` 指到新資料夾 |
-| 想完全移除 | 備份後 `wsl --unregister Alma-OpenCode`，再自行刪除 `$Root` 資料夾 |
+| 想完全移除 | 備份後 `wsl --unregister Alma-Training`，再自行刪除 `$Root` 資料夾 |
 
 請勿隨意使用 `wsl --shutdown`：它會立即關閉所有 WSL 發行版與整個 WSL2 虛擬機，同一台電腦上其他 WSL 環境的未存檔工作都會中斷。要停止單一環境只用 `wsl --terminate <名稱>`。
 
@@ -362,8 +232,6 @@ wsl --export $Name "$Root\backup\$Name-agent-baseline.tar"
 
 **未實測，請照做時留意**：
 
-- 第 9 步在 Alma 內安裝 Claude Code（`install.sh` 未審閱、未執行），以及 WSL 內的瀏覽器登入。
-- 第 9 步 OpenCode 的實測範圍：安裝、`--version`、`--help` 與 Windows 隔離在安裝後仍有效（2026-10-05，AlmaLinux 10.2、OpenCode 1.18.34）；TUI 互動畫面、`/connect` 與任何供應商連線、`opencode run`、`opencode upgrade`、`opencode uninstall` 都未實測。
 - 第 5 步設定密碼後的 `sudo` 行為（標準做法，但沒有跑過）。
 - 第 8 步「先 `--unregister` 再以同名、同資料夾 `--import`」的完整順序；實測是匯入成不同名稱、不同資料夾。
 - 在尚未安裝 WSL 的電腦上做第 2 步（依官方文件，非實測）。
@@ -375,10 +243,6 @@ wsl --export $Name "$Root\backup\$Name-agent-baseline.tar"
 - [Microsoft Learn, Basic commands for WSL](https://learn.microsoft.com/en-us/windows/wsl/basic-commands)：`--no-launch`、`--location`、`--terminate`、`--shutdown`、`--export`、`--import ... --version 2`、`--unregister` 的永久刪除警告、`wsl --update`。
 - [Microsoft Learn, Advanced settings configuration in WSL](https://learn.microsoft.com/en-us/windows/wsl/wsl-config)：`wsl.conf` 的 `[boot]`、`[user]`、`[automount]`、`[interop]`；設定需重啟 distro 才生效。
 - [AlmaLinux 官方 WSL 文件](https://wiki.almalinux.org/documentation/wsl.html)：`wsl --install AlmaLinux-10`、Kitten 為開發預覽版。
-- [Claude Code 官方文件：Advanced setup](https://code.claude.com/docs/en/setup)：WSL 內的 Linux 安裝指令 `curl -fsSL https://claude.ai/install.sh | bash`、驗證與登入。
-- [OpenCode 官方文件](https://opencode.ai/docs/) 與 [Windows (WSL)](https://opencode.ai/docs/windows-wsl/)：安裝腳本、WSL 建議、`/connect`。
-- [anomalyco/opencode（GitHub）](https://github.com/anomalyco/opencode)：安裝腳本下載的 release 來源。
-- 未查證：認證資料的存放位置、`opencode serve` 與 `opencode web` 的預設綁定位址。
 - 未查證：`--name` 旗標在 Microsoft 官方 Basic commands 的 `--install` 選項清單中未列出，依本機 `wsl --help` 確認存在。
 
 ## 授權
