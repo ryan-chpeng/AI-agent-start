@@ -266,4 +266,4 @@ wsl --import $Name "$Root\system" "$Root\backup\$Name-baseline.tar" --version 2
 - [AlmaLinux 官方 WSL 文件](https://wiki.almalinux.org/documentation/wsl.html)：`wsl --install AlmaLinux-10`、Kitten 為開發預覽版。
 - 未查證：`--name` 旗標在 Microsoft 官方 Basic commands 的 `--install` 選項清單中未列出，依本機 `wsl --help` 確認存在。
 
-> **授權與來源**：本文內容以 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授權，轉載或改作請標示出處。上一步：[單元 1：在 Windows 用終端機安裝 AI Agent](https://ryan-chpeng.github.io/alma-wsl-training/)。
+> **授權與來源**：本文內容以 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授權，轉載或改作請標示出處。上一步：[單元 1：在 Windows 用終端機安裝 AI Agent](https://ryan-chpeng.github.io/AI-agent-start/)。

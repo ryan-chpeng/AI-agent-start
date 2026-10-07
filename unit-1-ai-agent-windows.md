@@ -262,7 +262,7 @@ OpenCode 常用指令（來自 `opencode --help`）：
 ## 🔒 5. 使用前請注意
 
 > [!IMPORTANT]
-> **Windows 原生的 AI Agent 看得到你的整個使用者資料夾。** 它們能讀寫檔案、也能執行指令。請只在專用的練習資料夾（例如 `~\projects\demo`）啟動，不要在家目錄或放機密資料的資料夾啟動；重要檔案先備份或用 Git 存版本。需要與 Windows 隔離時，改用[單元 2](https://ryan-chpeng.github.io/alma-wsl-training/unit-2.html) 建立 Linux 環境。
+> **Windows 原生的 AI Agent 看得到你的整個使用者資料夾。** 它們能讀寫檔案、也能執行指令。請只在專用的練習資料夾（例如 `~\projects\demo`）啟動，不要在家目錄或放機密資料的資料夾啟動；重要檔案先備份或用 Git 存版本。需要與 Windows 隔離時，改用[單元 2](https://ryan-chpeng.github.io/AI-agent-start/unit-2.html) 建立 Linux 環境。
 
 > [!IMPORTANT]
 > **內容會送給模型供應商，金鑰自己保管。** 這些工具會把你的程式碼與提示傳給你選的供應商，教學時不要放機密資料。API key 與登入資訊不要貼在聊天室、截圖或公開的程式碼庫。認證資料存放在哪裡，本文沒有逐一查證，使用前請先看各工具官方文件。
@@ -313,4 +313,4 @@ OpenCode 常用指令（來自 `opencode --help`）：
 - [Gemini CLI（GitHub）](https://github.com/google-gemini/gemini-cli)：npm、npx 安裝與登入方式。
 - 本機審閱：`https://claude.ai/install.ps1`（2026-10-07，全文）、`https://chatgpt.com/codex/install.ps1`（2026-10-07，關鍵段落）。
 
-> **授權與來源**：本文內容以 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授權，轉載或改作請標示出處。下一步：[單元 2：安裝 AlmaLinux 10](https://ryan-chpeng.github.io/alma-wsl-training/unit-2.html)；受邀同事可先做上面第 5 節提到的 agent-kit。
+> **授權與來源**：本文內容以 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授權，轉載或改作請標示出處。下一步：[單元 2：安裝 AlmaLinux 10](https://ryan-chpeng.github.io/AI-agent-start/unit-2.html)；受邀同事可先做上面第 5 節提到的 agent-kit。
