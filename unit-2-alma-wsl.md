@@ -2,7 +2,7 @@
 
 在自己的 Windows 電腦上建立**獨立、可重置**的 AlmaLinux 10 練習環境 `Alma-Training`。全程在 PowerShell 操作，約 15 到 20 分鐘（下載約 1 分鐘，視網速）。
 
-**前提**：Windows 10／11 電腦。單元 1 的 AI CLI 是裝在 Windows 上；本單元是另外建立一個與 Windows 隔離、可隨時還原的 Linux 練習環境，兩個單元互相獨立。
+**前提**：Windows 10／11 電腦。單元 1 的 AI Agent 是裝在 Windows 上；本單元是另外建立一個與 Windows 隔離、可隨時還原的 Linux 練習環境，兩個單元互相獨立。
 
 ## 流程總覽
 

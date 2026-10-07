@@ -1,6 +1,6 @@
-# 單元 1：在 Windows 用終端機安裝 AI CLI
+# 單元 1：在 Windows 用終端機安裝 AI Agent
 
-AI CLI 是在終端機裡讀寫你專案檔案、執行指令的 AI 程式設計助手。本單元在 Windows 10／11 的 PowerShell 安裝四種：**Claude Code、Codex CLI、OpenCode、Gemini CLI**。不需要先設定 WSL，每個工具約 5 分鐘（視網速）。四個工具彼此獨立，裝你需要的就好。
+AI Agent 是在終端機裡讀寫你專案檔案、執行指令的 AI 程式設計助手。本單元在 Windows 10／11 的 PowerShell 安裝四種：**Claude Code、Codex CLI、OpenCode、Gemini CLI**。不需要先設定 WSL，每個工具約 5 分鐘（視網速）。四個工具彼此獨立，裝你需要的就好。
 
 **前提**
 
@@ -10,12 +10,14 @@ AI CLI 是在終端機裡讀寫你專案檔案、執行指令的 AI 程式設計
 ## 流程總覽
 
 ```text
-[1 開啟 PowerShell 與準備] → [2 選工具] ─┬→ [3 Claude Code]
-                                         ├→ [4 Codex CLI]
-                                         ├→ [5 OpenCode]
-                                         └→ [6 Gemini CLI]
-                                                  │
-                                [7 驗證、啟動、更新] → [8 使用前注意]
+[1 開啟 PowerShell 與準備] → [2 先看腳本再執行] → [3 安裝 AI Agent]
+                                                      │
+                                                      ├─ 3.1 Claude Code
+                                                      ├─ 3.2 Codex CLI
+                                                      ├─ 3.3 OpenCode
+                                                      └─ 3.4 Gemini CLI
+                                                      │
+                                   [4 驗證、啟動與更新] → [5 使用前注意]
 ```
 
 | 工具 | 廠商 | 登入方式 | Windows 安裝方式 |
@@ -64,11 +66,15 @@ winget install --id OpenJS.NodeJS.LTS -e --source winget
 - 不為了省事全域放寬 PowerShell 執行原則。
 - 不明來源的指令不要直接貼進終端機。
 
-## 3. 安裝 Claude Code
+## 3. 安裝 AI Agent
+
+以下四個工具各自獨立，只裝你需要的。每個工具的方法擇一即可。
+
+### 3.1 Claude Code
 
 三種方法擇一。**推薦方法 A**：原生安裝，會在背景自動更新。
 
-### 方法 A：PowerShell 原生安裝（推薦）
+#### 方法 A：PowerShell 原生安裝（推薦）
 
 ```powershell
 cd ~
@@ -92,7 +98,7 @@ Get-Content .\claude-install.ps1 -Raw | Invoke-Expression
 
 > 用 `Get-Content ... | Invoke-Expression`，是因為 Windows 預設的執行原則可能擋下直接執行下載的 `.ps1` 檔。想省略審閱，可直接用官方一行式 `irm https://claude.ai/install.ps1 | iex`。
 
-### 方法 B：CMD 安裝
+#### 方法 B：CMD 安裝
 
 在 CMD（提示符號沒有 `PS`）執行：
 
@@ -102,7 +108,7 @@ curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del in
 
 在 PowerShell 貼這行會出現 `The token '&&' is not a valid statement separator`；在 CMD 貼 `irm ...` 會出現 `'irm' is not recognized`。看到這兩個錯誤，就是用錯終端機了。
 
-### 方法 C：WinGet
+#### 方法 C：WinGet
 
 ```powershell
 winget install Anthropic.ClaudeCode
@@ -110,7 +116,7 @@ winget install Anthropic.ClaudeCode
 
 WinGet 安裝**不會自動更新**，要定期執行 `winget upgrade Anthropic.ClaudeCode`。
 
-### 其他：npm
+#### 其他：npm
 
 ```powershell
 npm install -g @anthropic-ai/claude-code
@@ -118,9 +124,9 @@ npm install -g @anthropic-ai/claude-code
 
 裝的是同一個原生執行檔。升級用 `npm install -g @anthropic-ai/claude-code@latest`，不要用 `npm update -g`。
 
-## 4. 安裝 Codex CLI
+### 3.2 Codex CLI
 
-### 方法 A：官方 PowerShell 腳本
+#### 方法 A：官方 PowerShell 腳本
 
 官方 Windows 指令：
 
@@ -137,13 +143,13 @@ cd ~
 irm https://chatgpt.com/codex/install.ps1 -OutFile codex-install.ps1
 ```
 
-### 方法 B：npm（腳本太長不想用時）
+#### 方法 B：npm（腳本太長不想用時）
 
 ```powershell
 npm install -g @openai/codex
 ```
 
-## 5. 安裝 OpenCode
+### 3.3 OpenCode
 
 OpenCode 官方文件的 Windows 說明是：「可以直接在 Windows 上執行，但建議用 WSL 以獲得最佳體驗」。原生 Windows 的安裝方式：
 
@@ -163,7 +169,7 @@ npm install -g opencode-ai
 
 啟動後用 `/connect` 設定供應商並輸入你自己的 API key。
 
-## 6. 安裝 Gemini CLI
+### 3.4 Gemini CLI
 
 ```powershell
 npm install -g @google/gemini-cli
@@ -177,7 +183,7 @@ npx @google/gemini-cli
 
 登入有三種：Google 帳號（OAuth）、Gemini API key（到 aistudio.google.com/apikey 取得）、Vertex AI（企業用，需計費帳戶）。免費額度與限制會變動，以官方 repo 說明為準。
 
-## 7. 驗證、啟動與更新
+## 4. 驗證、啟動與更新
 
 **每個工具裝完，關掉 PowerShell 開新的**（讓 PATH 生效），再驗證：
 
@@ -219,9 +225,9 @@ OpenCode 常用指令（來自 `opencode --help`）：
 | `opencode models` | 列出可用模型 |
 | `opencode uninstall` | 移除 OpenCode 與相關檔案 |
 
-## 8. 使用前請注意
+## 5. 使用前請注意
 
-- **Windows 原生的 AI CLI 看得到你的整個使用者資料夾。** 它們能讀寫檔案、也能執行指令。請只在專用的練習資料夾（例如 `~\projects\demo`）啟動，不要在家目錄或放機密資料的資料夾啟動；重要檔案先備份或用 Git 存版本。需要與 Windows 隔離時，改用單元 2 建立 Linux 環境。
+- **Windows 原生的 AI Agent 看得到你的整個使用者資料夾。** 它們能讀寫檔案、也能執行指令。請只在專用的練習資料夾（例如 `~\projects\demo`）啟動，不要在家目錄或放機密資料的資料夾啟動；重要檔案先備份或用 Git 存版本。需要與 Windows 隔離時，改用單元 2 建立 Linux 環境。
 - **內容會送給模型供應商。** 這些工具會把你的程式碼與提示傳給你選的供應商。教學時不要放機密資料。
 - **API key 與登入資訊請自己保管。** 不要貼在聊天室、截圖或公開的程式碼庫。認證資料存放在哪裡，本文沒有逐一查證，使用前請先看各工具官方文件。
 - **全域 npm 安裝不要用管理員權限硬裝。** 遇到權限錯誤，改用該工具的腳本、WinGet 或 Scoop。
