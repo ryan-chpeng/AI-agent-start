@@ -1,6 +1,6 @@
 # 單元 1：在 Windows 用終端機安裝 AI Agent
 
-> **ver. 1.0** ｜ **Last edited: 2026-10-07** ｜ 預估 5 分鐘／工具 ｜ Windows 10／11 ｜ Claude Code／Codex／OpenCode／Gemini CLI
+> **ver. 1.1** ｜ **Last edited: 2026-10-08** ｜ 預估 5 分鐘／工具 ｜ Windows 10／11 ｜ Claude Code／Codex／OpenCode／Gemini CLI
 
 > [!IMPORTANT]
 > Windows 原生安裝的 AI Agent **看得到你的整個使用者資料夾**，能讀寫檔案、也能執行指令：只在專用的練習資料夾啟動，重要檔案先備份。
@@ -194,7 +194,44 @@ npm install -g @openai/codex
 npm install -g opencode-ai
 ```
 
-啟動後用 `/connect` 設定供應商並輸入你自己的 API key。
+啟動後用 `/connect` 設定供應商並輸入你自己的 API key。已有其他供應商的人直接選自己的供應商；還沒有的人，照下面的 OpenCode Zen 免費模型路線取得金鑰。
+
+#### 取得 API key 並連線（OpenCode Zen 免費模型）
+
+```text
+登入 OpenCode 網站
+     │
+     ▼
+① Keys 頁籤 ──▶ Service Accounts ──▶ Add Service Account
+     │
+     ▼
+② 點進該 Service Account ──▶ API Keys 區 ──▶ Add API Key（金鑰只顯示一次）
+     │
+     ▼
+③ 終端機執行 opencode ──▶ /connect ──▶ 選 OpenCode Zen ──▶ 貼上金鑰
+     │
+     ▼
+④ /models ──▶ 選名稱帶 Free 的模型
+```
+
+1. 登入 OpenCode 網站，進入 **Keys** 頁籤，在 **Service Accounts** 按 **Add Service Account**，取一個好認的名稱。
+
+   ![Keys 頁籤的 Service Accounts 列表，右上角是 Add Service Account](assets/images/zen-step1-service-accounts.png)
+
+2. 點進剛建立的 Service Account，在 **API Keys** 區按 **Add API Key**。**完整金鑰只顯示一次**：建立後立刻複製，不要貼到聊天、文件或 Git；沒複製到就撤銷後重建。
+
+   ![Service Account 內的 API Keys 區，右上角是 Add API Key](assets/images/zen-step2-api-keys.png)
+
+3. 回到終端機執行 `opencode`，輸入 `/connect`，選 **OpenCode Zen**，貼上金鑰。
+4. 輸入 `/models`，選名稱帶 **Free** 的模型。
+
+> [!NOTE]
+> 截圖已遮蔽帳號名稱、金鑰前綴與用量數字；你自己的畫面會顯示完整內容，請勿把它們貼給別人。這個網頁流程是作者 2026-10-08 依實際畫面整理，官方文件沒有逐步寫出，介面改版時以畫面為準。
+
+> [!WARNING]
+> - 金鑰存在本機 `~/.local/share/opencode/auth.json`，是**明文**檔（作者在 Windows 11 查到，官方的加密方式未查證）：不要放進 Git、雲端同步資料夾，也不要分享給別人。
+> - 不用的金鑰到網頁上撤銷（Revoked），不要留著。
+> - 免費模型的名稱、額度與是否持續免費會變動，以 `/models` 清單與網站為準；內容是否被用於訓練，請先看供應商條款再決定能送什麼資料。
 
 ### 3.4 Gemini CLI
 
