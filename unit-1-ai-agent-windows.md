@@ -43,8 +43,9 @@ AI Agent 是在終端機裡讀寫你專案檔案、執行指令的 AI 程式設�
 | 1 | Windows 10 或 11，64 位元 | `winver` | 先更新 Windows |
 | 2 | 開的是 PowerShell，不是 CMD | 提示符號開頭有 `PS` | 重開 PowerShell；PowerShell 與 CMD 的指令不同 |
 | 3 | 有 `git`（建議） | `git --version` | 展開下方「安裝 Git for Windows」 |
-| 4 | 有 Node.js（OpenCode、Gemini CLI 的 npm 路線需要） | `node --version` | 展開下方「安裝 Node.js」 |
+| 4 | 有 Node.js（npm 路線需要；之後接 agent-kit 的 Claude Code 攔截防護也要用） | `node --version` | 展開下方「安裝 Node.js」 |
 | 5 | 帳號或 API key 已備好 | 見上方工具表 | 先申請，再回來安裝 |
+| 6 | 有 `gh` 並已登入（只有之後要接 agent-kit 時需要） | `gh auth status` | 安裝與登入步驟在 agent-kit 的 `INSTALL.md` 第 1 層，不在本單元 |
 
 <details>
 <summary><strong>安裝 Git for Windows（沒有 git 時展開）</strong></summary>
@@ -269,6 +270,9 @@ OpenCode 常用指令（來自 `opencode --help`）：
 > [!WARNING]
 > 全域 npm 安裝不要用管理員權限硬裝。遇到權限錯誤，改用該工具的腳本、WinGet 或 Scoop。
 
+> [!NOTE]
+> 受邀的同事可以接著用 [agent-kit-team](https://github.com/ryan-chpeng/agent-kit-team/blob/main/INSTALL.md) 的 `INSTALL.md`（私有 repo，要先被邀請）：它會幫你建工作資料夾、規則、記憶，並安裝攔截危險指令的防護，降低 Windows 原生 Agent 誤刪檔案的風險。這套防護支援 Claude Code、Codex、OpenCode，**不含 Gemini CLI**，也不適用裝在 WSL 內的 Agent。
+
 ---
 
 ## ❓ 常見問題
@@ -309,4 +313,4 @@ OpenCode 常用指令（來自 `opencode --help`）：
 - [Gemini CLI（GitHub）](https://github.com/google-gemini/gemini-cli)：npm、npx 安裝與登入方式。
 - 本機審閱：`https://claude.ai/install.ps1`（2026-10-07，全文）、`https://chatgpt.com/codex/install.ps1`（2026-10-07，關鍵段落）。
 
-> **授權與來源**：本文內容以 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授權，轉載或改作請標示出處。下一步：[單元 2：安裝 AlmaLinux 10](https://ryan-chpeng.github.io/alma-wsl-training/unit-2.html)。
+> **授權與來源**：本文內容以 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授權，轉載或改作請標示出處。下一步：[單元 2：安裝 AlmaLinux 10](https://ryan-chpeng.github.io/alma-wsl-training/unit-2.html)；受邀同事可先做上面第 5 節提到的 agent-kit。
