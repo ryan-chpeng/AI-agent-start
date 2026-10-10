@@ -9,9 +9,10 @@
 | 單元 | 內容 | 網頁 | 原稿 |
 | --- | --- | --- | --- |
 | 1 | 在 Windows 用終端機安裝 AI Agent（Claude Code、Codex、OpenCode、Gemini CLI） | [index.html](https://ryan-chpeng.github.io/AI-agent-start/) | [unit-1-ai-agent-windows.md](unit-1-ai-agent-windows.md) |
-| 2 | 安裝 AlmaLinux 10（WSL2） | [unit-2.html](https://ryan-chpeng.github.io/AI-agent-start/unit-2.html) | [unit-2-alma-wsl.md](unit-2-alma-wsl.md) |
+| 2 | 開局前環境配置（工作資料夾規劃；cld／cdx／opc／agy 多 Agent 共用規則與記憶） | [unit-2.html](https://ryan-chpeng.github.io/AI-agent-start/unit-2.html) | [unit-2-folders.md](unit-2-folders.md) |
+| 3 | 安裝 AlmaLinux 10（WSL2） | [unit-3.html](https://ryan-chpeng.github.io/AI-agent-start/unit-3.html) | [unit-3-alma-wsl.md](unit-3-alma-wsl.md) |
 
-建議順序：先做單元 1，在 Windows 上把 AI Agent 用起來；需要與 Windows 隔離、可隨時還原的環境時，再做單元 2。
+建議順序：先做單元 1 裝好工具；單元 2 規劃工作資料夾後再開始使用；需要與 Windows 隔離、可隨時還原的環境時，再做單元 3。
 
 ## 授權
 
