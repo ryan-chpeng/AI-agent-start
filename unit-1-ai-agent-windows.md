@@ -1,6 +1,6 @@
 # 單元 1：在 Windows 用終端機安裝 AI Agent
 
-> **ver. 1.1** ｜ **Last edited: 2026-10-08** ｜ 預估 5 分鐘／工具 ｜ Windows 10／11 ｜ Claude Code／Codex／OpenCode／Gemini CLI
+> **ver. 1.2** ｜ **Last edited: 2026-10-12** ｜ 預估 5 分鐘／工具 ｜ Windows 10／11 ｜ Claude Code／Codex／OpenCode／Gemini CLI
 
 > [!IMPORTANT]
 > Windows 原生安裝的 AI Agent **看得到你的整個使用者資料夾**，能讀寫檔案、也能執行指令：只在專用的練習資料夾啟動，重要檔案先備份。
@@ -45,7 +45,7 @@ AI Agent 是在終端機裡讀寫你專案檔案、執行指令的 AI 程式設�
 | 3 | 有 `git`（建議） | `git --version` | 展開下方「安裝 Git for Windows」 |
 | 4 | 有 Node.js（npm 路線需要；之後接 agent-kit 的 Claude Code 攔截防護也要用） | `node --version` | 展開下方「安裝 Node.js」 |
 | 5 | 帳號或 API key 已備好 | 見上方工具表 | 先申請，再回來安裝 |
-| 6 | 有 `gh` 並已登入（只有之後要接 agent-kit 時需要） | `gh auth status` | 安裝與登入步驟在 agent-kit 的 `INSTALL.md` 第 1 層，不在本單元 |
+| 6 | 有 `gh` 並已登入（只有之後要接 agent-kit 時需要） | `gh auth status` | 安裝與登入步驟在 agent-kit 的 `INSTALL-part1.md` 第 1 層，不在本單元 |
 
 <details>
 <summary><strong>安裝 Git for Windows（沒有 git 時展開）</strong></summary>
@@ -308,7 +308,7 @@ OpenCode 常用指令（來自 `opencode --help`）：
 > 全域 npm 安裝不要用管理員權限硬裝。遇到權限錯誤，改用該工具的腳本、WinGet 或 Scoop。
 
 > [!NOTE]
-> 受邀的同事可以接著用 [agent-kit-team](https://github.com/ryan-chpeng/agent-kit-team/blob/main/INSTALL.md) 的 `INSTALL.md`（私有 repo，要先被邀請）：它會幫你建工作資料夾、規則、記憶，並安裝攔截危險指令的防護，降低 Windows 原生 Agent 誤刪檔案的風險。這套防護支援 Claude Code、Codex、OpenCode，**不含 Gemini CLI**，也不適用裝在 WSL 內的 Agent。
+> 受邀的同事可以接著用 [agent-kit-team](https://github.com/ryan-chpeng/agent-kit-team/blob/main/INSTALL-part1.md) 的開局包（私有 repo，要先被邀請）。**Part 1**（`INSTALL-part1.md`，必裝）會幫你建工作資料夾、規則、記憶，並安裝攔截危險指令的防護，降低 Windows 原生 Agent 誤刪檔案的風險；**Part 2**（`INSTALL-part2.md`，選配）由 AI 逐題問你要不要接文件轉檔、Notion、Gmail 等外部工具。防護支援 Claude Code、Codex、OpenCode 與 **Antigravity CLI（`agy`）**；`agy` 不在本單元安裝範圍，防護目前只依官方文件撰寫、尚待真實 session 驗證。**Gemini CLI 仍不在支援範圍**，也不適用裝在 WSL 內的 Agent。
 
 ---
 
