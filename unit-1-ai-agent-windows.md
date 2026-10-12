@@ -1,6 +1,6 @@
 # 單元 1：在 Windows 用終端機安裝 AI Agent
 
-> **ver. 1.2** ｜ **Last edited: 2026-10-12** ｜ 預估 5 分鐘／工具 ｜ Windows 10／11 ｜ Claude Code／Codex／OpenCode／Gemini CLI
+> **ver. 1.2** ｜ **Last edited: 2026-10-12** ｜ 預估 5 分鐘／工具 ｜ Windows 10／11 ｜ Claude Code／Codex／OpenCode／Antigravity CLI
 
 > [!IMPORTANT]
 > Windows 原生安裝的 AI Agent **看得到你的整個使用者資料夾**，能讀寫檔案、也能執行指令：只在專用的練習資料夾啟動，重要檔案先備份。
@@ -10,7 +10,7 @@
 
 ## 💡 這個單元在做什麼
 
-AI Agent 是在終端機裡讀寫你專案檔案、執行指令的 AI 程式設計助手。本單元在 Windows 10／11 的 PowerShell 安裝四種：**Claude Code、Codex CLI、OpenCode、Gemini CLI**。不需要先設定 WSL。四個工具彼此獨立，裝你需要的就好。
+AI Agent 是在終端機裡讀寫你專案檔案、執行指令的 AI 程式設計助手。本單元在 Windows 10／11 的 PowerShell 安裝四種：**Claude Code、Codex CLI、OpenCode、Antigravity CLI（`agy`）**。不需要先設定 WSL。四個工具彼此獨立，裝你需要的就好。
 
 ```text
 單元 1
@@ -20,7 +20,7 @@ AI Agent 是在終端機裡讀寫你專案檔案、執行指令的 AI 程式設�
 │   ├─ 3.1 Claude Code
 │   ├─ 3.2 Codex CLI
 │   ├─ 3.3 OpenCode
-│   └─ 3.4 Gemini CLI
+│   └─ 3.4 Antigravity CLI（agy）
 ├─ 4 驗證（你做）：版本、登入、啟動、更新
 └─ 5 使用前注意（規範）：隔離、隱私、金鑰
 ```
@@ -30,7 +30,7 @@ AI Agent 是在終端機裡讀寫你專案檔案、執行指令的 AI 程式設�
 | Claude Code | Anthropic | Pro／Max／Team／Enterprise／Console 帳號（免費 claude.ai 方案不含） | PowerShell 腳本、CMD、WinGet、npm |
 | Codex CLI | OpenAI | ChatGPT 帳號（Plus、Pro、Business、Edu、Enterprise）或 API key | PowerShell 腳本、npm |
 | OpenCode | 開源（anomalyco） | 自備任一模型供應商的 API key | npm、Scoop、Chocolatey |
-| Gemini CLI | Google | Google 帳號登入、Gemini API key 或 Vertex AI | npm、npx |
+| Antigravity CLI（`agy`） | Google | Google 帳號（瀏覽器登入）或 Gemini API key | PowerShell 腳本、CMD |
 
 ---
 
@@ -76,7 +76,7 @@ winget install --id OpenJS.NodeJS.LTS -e --source winget
 
 ## 🧭 2. 通則：先看腳本，再執行
 
-四個工具中，Claude Code 與 Codex 官方都提供「`irm 網址 | iex`」一行式安裝，會直接執行網路上的腳本。教學環境的做法是**先下載、看過、再執行**：
+四個工具中，Claude Code、Codex 與 Antigravity CLI 官方都提供「`irm 網址 | iex`」一行式安裝，會直接執行網路上的腳本。教學環境的做法是**先下載、看過、再執行**：
 
 | # | 規範 |
 |:-:|:--|
@@ -233,19 +233,45 @@ npm install -g opencode-ai
 > - 不用的金鑰到網頁上撤銷（Revoked），不要留著。
 > - 免費模型的名稱、額度與是否持續免費會變動，以 `/models` 清單與網站為準；內容是否被用於訓練，請先看供應商條款再決定能送什麼資料。
 
-### 3.4 Gemini CLI
+### 3.4 Antigravity CLI（`agy`）
+
+Google 的終端機 Agent，指令名稱是 `agy`。官方提供 PowerShell 與 CMD 兩種安裝方式，都不需要 Node.js。
+
+#### 方法 A：PowerShell（推薦，先審閱再執行）
 
 ```powershell
-npm install -g @google/gemini-cli
+cd ~
+irm https://antigravity.google/cli/install.ps1 -OutFile agy-install.ps1
+(Get-Content .gy-install.ps1 | Measure-Object -Line).Lines
+notepad .gy-install.ps1
 ```
 
-不想全域安裝、只想試用：
+我們審閱過的版本（2026-10-12 下載，約 170 行）做的事：
+
+- 依 CPU 選 `windows_amd64` 或 `windows_arm64`，其他架構直接中止。
+- 已經裝過就只顯示提示並結束，不會覆蓋（`agy` 會在背景自動更新）。
+- 從 `antigravity-cli-auto-updater-974169037036.us-central1.run.app` 取得版本 manifest，下載 `agy.exe` 到暫存區，**比對 manifest 內的 SHA512 校驗碼**，不符就中止。
+- 把 `agy.exe` 放到 `%LOCALAPPDATA%gyin`，再執行 `agy.exe install` 設定 PATH；結束時刪除暫存檔。
+
+> [!IMPORTANT]
+> 下載來源是 Google Cloud Run 的網域（`*.run.app`），不是 `antigravity.google`。審閱時確認網址與上面一致，再執行下面這行。
 
 ```powershell
-npx @google/gemini-cli
+Get-Content .gy-install.ps1 -Raw | Invoke-Expression
 ```
 
-登入有三種：Google 帳號（OAuth）、Gemini API key（到 aistudio.google.com/apikey 取得）、Vertex AI（企業用，需計費帳戶）。免費額度與限制會變動，以官方 repo 說明為準。
+想省略審閱，可直接用官方一行式 `irm https://antigravity.google/cli/install.ps1 | iex`。
+
+#### 方法 B：CMD
+
+```batch
+curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd && install.cmd && del install.cmd
+```
+
+**登入：** 第一次執行 `agy` 會開瀏覽器，用個人 Google 帳號登入；登入資訊存在 Windows 認證管理員，不是明文檔案。也可以改用 Gemini API key（要在 `~/.gemini/antigravity-cli/settings.json` 設 `"modelProvider": "gemini"`，再設 `GEMINI_API_KEY` 環境變數；只設環境變數沒有效果）。可用模型與額度依帳號方案而定，以官方文件為準。
+
+> [!NOTE]
+> 原本的 Gemini CLI 已不再列入本單元，改教 Antigravity CLI；團隊開局包的安全防護也只涵蓋 `agy`。
 
 ---
 
@@ -257,7 +283,7 @@ npx @google/gemini-cli
 claude --version
 codex --version
 opencode --version
-gemini --version
+agy --version
 ```
 
 只會有你裝過的那幾個有輸出，沒裝的會顯示找不到指令，這是正常的。Claude Code 另有診斷指令：
@@ -271,7 +297,7 @@ claude doctor
 ```powershell
 mkdir ~\projects\demo
 cd ~\projects\demo
-claude     # 或 codex、opencode、gemini
+claude     # 或 codex、opencode、agy
 ```
 
 | 工具 | 啟動 | 更新 |
@@ -279,7 +305,7 @@ claude     # 或 codex、opencode、gemini
 | Claude Code | `claude` | `claude update`（原生安裝會自動更新；WinGet 用 `winget upgrade Anthropic.ClaudeCode`） |
 | Codex CLI | `codex` | 重跑安裝腳本，或 `npm install -g @openai/codex@latest` |
 | OpenCode | `opencode` | `opencode upgrade`（npm 安裝亦可重跑 `npm install -g opencode-ai`） |
-| Gemini CLI | `gemini` | `npm install -g @google/gemini-cli@latest` |
+| Antigravity CLI | `agy` | 會在背景自動更新；手動更新用 `agy update` |
 
 OpenCode 常用指令（來自 `opencode --help`）：
 
@@ -308,7 +334,7 @@ OpenCode 常用指令（來自 `opencode --help`）：
 > 全域 npm 安裝不要用管理員權限硬裝。遇到權限錯誤，改用該工具的腳本、WinGet 或 Scoop。
 
 > [!NOTE]
-> 受邀的同事可以接著用 [agent-kit-team](https://github.com/ryan-chpeng/agent-kit-team/blob/main/INSTALL-part1.md) 的開局包（私有 repo，要先被邀請）。**Part 1**（`INSTALL-part1.md`，必裝）會幫你建工作資料夾、規則、記憶，並安裝攔截危險指令的防護，降低 Windows 原生 Agent 誤刪檔案的風險；**Part 2**（`INSTALL-part2.md`，選配）由 AI 逐題問你要不要接文件轉檔、Notion、Gmail 等外部工具。防護支援 Claude Code、Codex、OpenCode 與 **Antigravity CLI（`agy`）**；`agy` 不在本單元安裝範圍，防護目前只依官方文件撰寫、尚待真實 session 驗證。**Gemini CLI 仍不在支援範圍**，也不適用裝在 WSL 內的 Agent。
+> 受邀的同事可以接著用 [agent-kit-team](https://github.com/ryan-chpeng/agent-kit-team/blob/main/INSTALL-part1.md) 的開局包（私有 repo，要先被邀請）。**Part 1**（`INSTALL-part1.md`，必裝）會幫你建工作資料夾、規則、記憶，並安裝攔截危險指令的防護，降低 Windows 原生 Agent 誤刪檔案的風險；**Part 2**（`INSTALL-part2.md`，選配）由 AI 逐題問你要不要接文件轉檔、Notion、Gmail 等外部工具。防護支援 Claude Code、Codex、OpenCode 與 **Antigravity CLI（`agy`）**（`agy` 的防護目前只依官方文件撰寫，尚待真實 session 驗證），不適用裝在 WSL 內的 Agent。
 
 ---
 
@@ -316,10 +342,10 @@ OpenCode 常用指令（來自 `opencode --help`）：
 
 | 問題 | 回答 |
 |:--|:--|
-| 指令找不到（`claude`、`codex`、`opencode`、`gemini`）？ | 關掉終端機開新的；仍找不到是 PATH 還沒包含安裝目錄，用 `where.exe 指令名` 確認。 |
+| 指令找不到（`claude`、`codex`、`opencode`、`agy`）？ | 關掉終端機開新的；仍找不到是 PATH 還沒包含安裝目錄，用 `where.exe 指令名` 確認。 |
 | `The token '&&' is not a valid statement separator`？ | 你在 PowerShell 貼了 CMD 的指令，改用方法 A。 |
 | `'irm' is not recognized as an internal or external command`？ | 你在 CMD 貼了 PowerShell 的指令，改開 PowerShell。 |
-| 安裝時出現 `403` 或連線錯誤？ | 檢查網路、VPN 或公司代理是否擋住對應網域（`claude.ai`、`downloads.claude.ai`、`chatgpt.com`、`releases.openai.com`、`registry.npmjs.org`）。 |
+| 安裝時出現 `403` 或連線錯誤？ | 檢查網路、VPN 或公司代理是否擋住對應網域（`claude.ai`、`downloads.claude.ai`、`chatgpt.com`、`releases.openai.com`、`registry.npmjs.org`、`antigravity.google`、`*.run.app`）。 |
 | 提示所在地區不支援？ | 各工具對國家與地區有各自限制，見官方文件（Claude Code 見 Anthropic supported countries）。 |
 | 直接執行 `.ps1` 被擋（執行原則）？ | 用本文的 `Get-Content ... \| Invoke-Expression`，或官方指令的行程內 `-ExecutionPolicy ByPass`；不要全域放寬。 |
 | `npm` 找不到？ | 先安裝 Node.js（第 1 節），並重開 PowerShell。 |
@@ -330,14 +356,14 @@ OpenCode 常用指令（來自 `opencode --help`）：
 
 ## 📋 版本與驗證範圍
 
-本單元依各工具官方文件（查閱日 2026-10-07）整理，並讀過 `https://claude.ai/install.ps1` 全文（約 110 行）與 `https://chatgpt.com/codex/install.ps1` 的關鍵段落（約 1200 行，只掃過，沒有逐行審閱）。**沒有執行任何安裝腳本。**
+本單元依各工具官方文件（查閱日 2026-10-07）整理，並讀過 `https://claude.ai/install.ps1` 全文（約 110 行）與 `https://chatgpt.com/codex/install.ps1` 的關鍵段落（約 1200 行，只掃過，沒有逐行審閱）；2026-10-12 讀過 `https://antigravity.google/cli/install.ps1` 全文（約 170 行）。**沒有執行任何安裝腳本。**
 
 **尚未在乾淨的 Windows 上實測，請照做時留意**：
 
 - Claude Code 方法 A 的「先下載、審閱，再用 `Invoke-Expression` 執行」流程（官方只給一行式）、方法 B（CMD）、方法 C（WinGet）。
-- Codex CLI 的腳本與 npm 方式、Gemini CLI 的 npm 與 npx、OpenCode 的 npm／Scoop／Chocolatey。
+- Codex CLI 的腳本與 npm 方式、Antigravity CLI 的「先下載、審閱，再執行」流程與 CMD 方式、OpenCode 的 npm／Scoop／Chocolatey。
 - 各工具在 Windows Terminal 下的顯示效果，以及登入與供應商連線流程。
-- 各工具的更新指令（Codex、Gemini CLI 的更新方式是依 npm 慣例推定，官方頁面未逐項列出）。
+- 各工具的更新指令（Codex 的更新方式是依 npm 慣例推定，官方頁面未逐項列出）。
 - 各工具的 Node.js 版本下限（只有 Claude Code 的 npm 方式官方明確寫 Node.js 22 以上）。
 
 ## 📚 出處
@@ -347,7 +373,7 @@ OpenCode 常用指令（來自 `opencode --help`）：
 - [OpenAI Codex CLI（GitHub）](https://github.com/openai/codex)：Windows 安裝指令、npm 安裝、登入方式。
 - [OpenCode：Install](https://opencode.ai/docs/)：npm、Scoop、Chocolatey 等安裝方式、Windows 注意事項。
 - [OpenCode：Windows (WSL)](https://opencode.ai/docs/windows-wsl/)：Windows 建議使用 WSL。
-- [Gemini CLI（GitHub）](https://github.com/google-gemini/gemini-cli)：npm、npx 安裝與登入方式。
-- 本機審閱：`https://claude.ai/install.ps1`（2026-10-07，全文）、`https://chatgpt.com/codex/install.ps1`（2026-10-07，關鍵段落）。
+- [Antigravity CLI：Installation and auth](https://antigravity.google/docs/cli/install/)：Windows 安裝指令、安裝路徑、`agy update`、瀏覽器登入與 Gemini API key 設定。
+- 本機審閱：`https://claude.ai/install.ps1`（2026-10-07，全文）、`https://chatgpt.com/codex/install.ps1`（2026-10-07，關鍵段落）、`https://antigravity.google/cli/install.ps1`（2026-10-12，全文）。
 
 > **授權與來源**：本文內容以 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授權，轉載或改作請標示出處。下一步：[單元 2：開局前環境配置](https://ryan-chpeng.github.io/AI-agent-start/unit-2.html)；受邀同事可在單元 2 之後做上面第 5 節提到的 agent-kit。
