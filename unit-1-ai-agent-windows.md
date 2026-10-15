@@ -1,6 +1,6 @@
 # 單元 1：在 Windows 用終端機安裝 AI Agent
 
-> **ver. 1.2** ｜ **Last edited: 2026-10-12** ｜ 預估 5 分鐘／工具 ｜ Windows 10／11 ｜ Claude Code／Codex／OpenCode／Antigravity CLI
+> **ver. 1.3** ｜ **Last edited: 2026-10-15** ｜ 預估 5 分鐘／工具 ｜ Windows 10／11 ｜ Claude Code／Codex／OpenCode／Antigravity CLI
 
 > [!IMPORTANT]
 > Windows 原生安裝的 AI Agent **看得到你的整個使用者資料夾**，能讀寫檔案、也能執行指令：只在專用的練習資料夾啟動，重要檔案先備份。
@@ -25,12 +25,15 @@ AI Agent 是在終端機裡讀寫你專案檔案、執行指令的 AI 程式設�
 └─ 5 使用前注意（規範）：隔離、隱私、金鑰
 ```
 
-| 工具 | 廠商 | 登入方式 | Windows 安裝方式 |
-|:--|:--|:--|:--|
-| Claude Code | Anthropic | Pro／Max／Team／Enterprise／Console 帳號（免費 claude.ai 方案不含） | PowerShell 腳本、CMD、WinGet、npm |
-| Codex CLI | OpenAI | ChatGPT 帳號（Plus、Pro、Business、Edu、Enterprise）或 API key | PowerShell 腳本、npm |
-| OpenCode | 開源（anomalyco） | 自備任一模型供應商的 API key | npm、Scoop、Chocolatey |
-| Antigravity CLI（`agy`） | Google | Google 帳號（瀏覽器登入）或 Gemini API key | PowerShell 腳本、CMD |
+| 工具 | 廠商 | 登入方式 | 免費可用？ | 基礎付費方案（月費 USD） | Windows 安裝方式 |
+|:--|:--|:--|:--|:--|:--|
+| Claude Code | Anthropic | Pro／Max／Team／Enterprise／Console 帳號 | ❌ 免費 claude.ai 方案不含 | Claude Pro **$20** | PowerShell 腳本、CMD、WinGet、npm |
+| Codex CLI | OpenAI | ChatGPT 帳號或 API key | ⚠️ Free／Go 方案含有限額度（不含 Codex Cloud） | ChatGPT Go **$8**（輕量）／Plus **$20**（完整） | PowerShell 腳本、npm |
+| OpenCode | 開源（anomalyco） | 自備任一模型供應商的 API key | ✅ OpenCode Zen 名稱帶 Free 的模型 | OpenCode Go **$10**（首月 $5） | npm、Scoop、Chocolatey |
+| Antigravity CLI（`agy`） | Google | Google 帳號（瀏覽器登入）或 Gemini API key | ✅ Individuals 方案，基本每週額度 | Google AI Pro **$19.99** | PowerShell 腳本、CMD |
+
+> [!NOTE]
+> 價格為美國月繳美元價（查詢日 2026-10-15），台灣售價與稅金以結帳頁為準。免費額度與限時方案經常變動，以官方定價頁為準。Google AI Pro 價格來自第三方報導，Antigravity 官方定價頁未標金額。
 
 ---
 
@@ -374,6 +377,7 @@ OpenCode 常用指令（來自 `opencode --help`）：
 - [OpenCode：Install](https://opencode.ai/docs/)：npm、Scoop、Chocolatey 等安裝方式、Windows 注意事項。
 - [OpenCode：Windows (WSL)](https://opencode.ai/docs/windows-wsl/)：Windows 建議使用 WSL。
 - [Antigravity CLI：Installation and auth](https://antigravity.google/docs/cli/install/)：Windows 安裝指令、安裝路徑、`agy update`、瀏覽器登入與 Gemini API key 設定。
+- 方案與價格（查閱日 2026-10-15）：[Claude pricing](https://claude.com/pricing)、[Codex Pricing](https://developers.openai.com/codex/pricing)、[Using Codex with your ChatGPT plan](https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan)、[Antigravity pricing](https://antigravity.google/pricing)、[Google AI 方案整理（TechCabal，第三方）](https://techcabal.com/2026/06/05/google-ai-subscription-plans-explained/)、[OpenCode Go](https://opencode.ai/docs/go/)、[OpenCode Zen](https://opencode.ai/docs/zen)。
 - 本機審閱：`https://claude.ai/install.ps1`（2026-10-07，全文）、`https://chatgpt.com/codex/install.ps1`（2026-10-07，關鍵段落）、`https://antigravity.google/cli/install.ps1`（2026-10-12，全文）。
 
 > **授權與來源**：本文內容以 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 授權，轉載或改作請標示出處。下一步：[單元 2：開局前環境配置](https://ryan-chpeng.github.io/AI-agent-start/unit-2.html)；受邀同事可在單元 2 之後做上面第 5 節提到的 agent-kit。
